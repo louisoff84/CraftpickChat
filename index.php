@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 $username = (string) ($_SESSION['username'] ?? 'Utilisateur');
+$isAdmin = (bool) ($_SESSION['is_admin'] ?? false);
 $initial = strtoupper(substr($username, 0, 1));
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@ $initial = strtoupper(substr($username, 0, 1));
     <aside class="sidebar">
       <div class="sidebar-top"><div><small>Espace de travail</small><h1>CraftpickChat</h1></div><button class="round" id="newMessage">✎</button></div>
       <div class="user-card"><span class="avatar me"><?= htmlspecialchars($initial, ENT_QUOTES, 'UTF-8') ?></span><div><strong><?= htmlspecialchars($username, ENT_QUOTES, 'UTF-8') ?></strong><small><i class="online"></i> En ligne · <a href="logout.php" style="color:inherit">Déconnexion</a></small></div></div>
-      <nav><button class="nav active">💬 Discussions</button><button class="nav">@ Mentions</button><button class="nav">🔖 Enregistrés</button></nav>
+      <nav><button class="nav active">💬 Discussions</button><button class="nav">@ Mentions</button><button class="nav">🔖 Enregistrés</button><?php if ($isAdmin): ?><a class="nav" href="admin.php" style="display:block;text-decoration:none">⚙ Administration</a><?php endif; ?></nav>
       <div class="section-title"><span>Canaux</span><button id="addChannel">+</button></div>
       <div id="channels"><button class="channel active" data-name="général" data-description="Échanges généraux de l'équipe Craftpick."># général</button><button class="channel" data-name="annonces" data-description="Toutes les annonces importantes."># annonces</button><button class="channel" data-name="développement" data-description="Discussions autour du développement."># développement</button><button class="channel" data-name="support" data-description="Aide et support de l'équipe."># support</button></div>
       <div class="section-title direct-title"><span>Messages directs</span></div>
