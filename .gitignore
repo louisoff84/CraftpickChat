@@ -1,0 +1,21 @@
+# Configuration privée
+config.php
+.env
+.env.*
+
+# Données et sauvegardes
+*.sqlite
+*.sqlite3
+*.db
+backups/
+
+# Logs
+*.log
+logs/
+
+# Dépendances / IDE
+vendor/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
