@@ -38,9 +38,15 @@ try {
             username VARCHAR(32) NOT NULL UNIQUE,
             email VARCHAR(190) NOT NULL UNIQUE,
             password_hash VARCHAR(255) NOT NULL,
+            is_admin TINYINT(1) NOT NULL DEFAULT 0,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
     );
+
+    $column = $pdo->query("SHOW COLUMNS FROM users LIKE 'is_admin'")->fetch();
+    if (!$column) {
+        $pdo->exec('ALTER TABLE users ADD COLUMN is_admin TINYINT(1) NOT NULL DEFAULT 0 AFTER password_hash');
+    }
 } catch (PDOException $e) {
     http_response_code(500);
     exit('Connexion MySQL impossible. Vérifie les identifiants dans config.php et que la base existe.');
